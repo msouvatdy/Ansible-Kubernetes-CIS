@@ -1352,6 +1352,8 @@
       line: '    - --encryption-provider-config={{ encryption_provider_config }}'
       insertafter: '^\s+- kube-apiserver$'
       backup: yes
+    when: encryption_provider
+
   - name: "SCORED | 1.2.33 | PATCH | L1 | MASTER | Ensure that the --encryption-provider-config argument is set as appropriate"
     lineinfile:
       path: "{{ api_server_pod_specification_file }}"
@@ -1363,6 +1365,7 @@
       backup: yes
   when:
     - rule_1_2_33
+    - encryption_provider
   tags:
     - level1
     - perms
@@ -1377,6 +1380,7 @@
     content: "{{ encryption_provider_config_file_content }}"
   when:
     - rule_1_2_34
+    - encryption_provider
   tags:
     - level1
     - perms
