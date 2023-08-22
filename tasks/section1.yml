@@ -321,7 +321,7 @@
   find:
     paths: /etc/kubernetes/pki/
     patterns: '*.key'
-    mode: 0600
+    file_type: directory
   when:
     - rule_1_1_21
   tags:
