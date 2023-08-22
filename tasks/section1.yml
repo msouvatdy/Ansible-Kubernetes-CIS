@@ -317,7 +317,26 @@
     - rule_1.1.20
     - master
 
-- name: "SCORED | 1.1.21 | PATCH | L1 | MASTER | Ensure that the Kubernetes PKI certificate file permissions are set to 600 or more restrictive"
+- name: "SCORED | 1.1.21 | PATCH | L1 | MASTER | Ensure that the Kubernetes PKI certificate file permissions are set to 600 or more restrictive (1/2)"
+  find:
+    paths: /etc/kubernetes/pki/
+    patterns: '*.key'
+    mode: 0600
+  when:
+    - rule_1_1_21
+  tags:
+    - level1
+    - perms
+    - patch
+    - rule_1.1.21
+    - master
+  register: result
+
+- name: debug
+  debug:
+    msg: "{{result}}"
+
+- name: "SCORED | 1.1.21 | PATCH | L1 | MASTER | Ensure that the Kubernetes PKI certificate file permissions are set to 600 or more restrictive (2/2)"
   file:
     path: /etc/kubernetes/pki/*.key
     state: file
