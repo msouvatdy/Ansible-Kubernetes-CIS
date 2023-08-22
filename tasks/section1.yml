@@ -334,9 +334,10 @@
 
 - name: "SCORED | 1.1.21 | PATCH | L1 | MASTER | Ensure that the Kubernetes PKI certificate file permissions are set to 600 or more restrictive (2/2)"
   file:
-    path: "{{ result.files.path }}"
+    path: "{{ item.value.path }}"
     state: file
     mode: 0600
+  loop: "{{ query('dict', result.files) }}"
   when:
     - rule_1_1_21
   tags:
