@@ -254,7 +254,7 @@ kubelet_config_file: "/var/lib/kubelet/config.yaml"
 kubelet_authentication_anonymous_enabled: "true"
 kubelet_authentication_x509_clientCAFile: "/etc/kubernetes/pki/ca.crt"
 streaming_connection_idle_timeout: 25s
-kubelet_tls_cert_file: "/this/path/needs/to/be/defined"
-kubelet_tls_private_key_file: "/this/path/needs/to/be/defined"
+kubelet_tls_cert_file: "/var/lib/kubelet/pki/kubelet.crt"
+kubelet_tls_private_key_file: "/var/lib/kubelet/pki/kubelet.key"
 kubelet_tls_cipher_suites: "TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256,TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256,TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305,TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384,TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305,TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384,TLS_RSA_WITH_AES_256_GCM_SHA384,TLS_RSA_WITH_AES_128_GCM_SHA256"
 event_record_qps: 0
