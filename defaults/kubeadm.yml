@@ -232,7 +232,7 @@ scheduler_bind_address: 127.0.0.1
 
 # etcd pod specification file
 etcd_pod_specification_file: "/etc/kubernetes/manifests/etcd.yaml"
-etcd_data_directory: "/var/lib/minikube/etcd"
+etcd_data_directory: "/var/lib/etcd"
 etcd_cert_file: "/etc/kubernetes/pki/etcd/server.crt"
 etcd_key_file: "/etc/kubernetes/pki/etcd/server.key"
 client_cert_auth: "true"
