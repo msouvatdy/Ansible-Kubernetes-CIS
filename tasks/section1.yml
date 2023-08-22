@@ -319,7 +319,7 @@
 
 - name: "SCORED | 1.1.21 | PATCH | L1 | MASTER | Ensure that the Kubernetes PKI certificate file permissions are set to 600 or more restrictive (1/2)"
   find:
-    paths: /etc/kubernetes/pki/
+    paths: /etc/kubernetes/pki
     patterns: '*.key'
     file_type: directory
   when:
@@ -332,13 +332,9 @@
     - master
   register: result
 
-- name: debug
-  debug:
-    msg: "{{result}}"
-
 - name: "SCORED | 1.1.21 | PATCH | L1 | MASTER | Ensure that the Kubernetes PKI certificate file permissions are set to 600 or more restrictive (2/2)"
   file:
-    path: /etc/kubernetes/pki/*.key
+    path: "{{ result.files.path }}"
     state: file
     mode: 0600
   when:
