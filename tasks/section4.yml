@@ -1,9 +1,9 @@
 ---
-- name: "SCORED | 4.1.1 | PATCH | L1 | WORKER | Ensure that the `kubelet` service file has permissions of `644` or more restrictive."
+- name: "SCORED | 4.1.1 | PATCH | L1 | WORKER | Ensure that the `kubelet` service file has permissions of `600` or more restrictive."
   file:
     dest: "{{ kubelet_service_file }}"
     state: file
-    mode: 0755
+    mode: 0600
   when: rule_4_1_1
   tags:
     - level1
@@ -29,17 +29,17 @@
     - worker
 
 
-- name: "SCORED | 4.1.3 | PATCH | L1 | WORKER | If proxy kubeconfig file exists ensure permissions are set to 644 or more restrictive"
+- name: "SCORED | 4.1.3 | PATCH | L1 | WORKER | If proxy kubeconfig file exists ensure permissions are set to 600 or more restrictive"
   block:
   - name: "SCORED | 4.1.3 | PATCH | L1 | WORKER | Check that the somefile.conf exists"
     stat:
       path: "{{ proxy_kubeconfig_file }}"
     register: proxy_kubeconfig_file_stat
-  - name: "SCORED | 4.1.3 | PATCH | L1 | WORKER | Ensure that the proxy kubeconfig file ownership is set to 644 or more restrictive"
+  - name: "SCORED | 4.1.3 | PATCH | L1 | WORKER | Ensure that the proxy kubeconfig file ownership is set to 600 or more restrictive"
     file:
       dest: "{{ proxy_kubeconfig_file }}"
       state: file
-      mode: 0644
+      mode: 0600
     when: proxy_kubeconfig_file_stat.stat.exists
   when: rule_4_1_3
   tags:
@@ -72,11 +72,11 @@
     - worker
 
 
-- name: "SCORED | 4.1.5 | PATCH | L1 | WORKER | Ensure that the --kubeconfig kubelet.conf file permissions are set to 644 or more restrictive"
+- name: "SCORED | 4.1.5 | PATCH | L1 | WORKER | Ensure that the --kubeconfig kubelet.conf file permissions are set to 600 or more restrictive"
   file:
     dest: "{{ kubeconfig_kubelet_conf_file }}"
     state: file
-    mode: 0644
+    mode: 0600
   when: rule_4_1_5
   tags:
     - level1
@@ -101,17 +101,17 @@
     - worker
 
 
-- name: "SCORED | 4.1.7 | PATCH | L1 | WORKER | Ensure that the certificate authorities file permissions are set to 644 or more restrictive"
+- name: "SCORED | 4.1.7 | PATCH | L1 | WORKER | Ensure that the certificate authorities file permissions are set to 600 or more restrictive"
   block:
   - name: "SCORED | 4.1.7 | PATCH | L1 | WORKER | Check that the certificate authorities file exists"
     stat:
       path: "{{ certificate_authorities_file }}"
     register: certificate_authorities_file_stat
-  - name: "SCORED | 4.1.7 | PATCH | L1 | WORKER | Ensure that the certificate authorities file permissions are set to 644 or more restrictive"
+  - name: "SCORED | 4.1.7 | PATCH | L1 | WORKER | Ensure that the certificate authorities file permissions are set to 600 or more restrictive"
     file:
       dest: "{{ certificate_authorities_file }}"
       state: file
-      mode: 0644
+      mode: 0600
     when: certificate_authorities_file_stat.stat.exists
   tags:
     - level1
@@ -142,11 +142,11 @@
     - worker
 
 
-- name: "SCORED | 4.1.9 | PATCH | L1 | WORKER | Ensure that the kubelet --config configuration file has permissions set to 644 or more restrictive"
+- name: "SCORED | 4.1.9 | PATCH | L1 | WORKER | Ensure that the kubelet --config configuration file has permissions set to 600 or more restrictive"
   file:
     dest: "{{ kubelet_config_file }}"
     state: file
-    mode: 0644
+    mode: 0600
   when: rule_4_1_9
   tags:
     - level1
@@ -411,42 +411,42 @@
     - worker
 
 
-- name: "SCORED | 4.2.7 | PATCH | L1 | WORKER | Ensure that the --make-iptables-util-chains argument is set to true"
-  block:
-  - name: "SCORED | 4.2.7 | PATCH | L1 | WORKER | Slurp file {{ kubelet_config_file }}"
-    slurp:
-      src: "{{ kubelet_config_file }}"
-    register: slurped_4_2_7
-  - name: "SCORED | 4.2.7 | PATCH | L1 | WORKER | Convert to dictionary"
-    set_fact:
-      before_4_2_7: "{{ slurped_4_2_7.content|b64decode|from_yaml }}"
-  - name: "SCORED | 4.2.7 | PATCH | L1 | WORKER | Add new value"
-    vars: 
-      new_value_4_2_7:
-        makeIPTablesUtilChains: true
-    set_fact:
-      after_4_2_7: "{{ before_4_2_7 | combine(new_value_4_2_7) }}"
-    when: before_4_2_7.makeIPTablesUtilChains is not defined
-  - name: "SCORED | 4.2.7 | PATCH | L1 | WORKER | Update existing value"
-    set_fact:
-      after_4_2_7: "{{ before_4_2_7 | combine(after_4_2_7, recursive=True) }}"
-    vars: 
-      after_4_2_7:
-        makeIPTablesUtilChains: true
-    when: before_4_2_7.makeIPTablesUtilChains is defined and before_4_2_7.makeIPTablesUtilChains != true
-  - name: "SCORED | 4.2.7 | PATCH | L1 | WORKER | Ensure that the --make-iptables-util-chains argument is set to true"
-    copy:
-      content: '{{ after_4_2_7 | to_nice_yaml }}'
-      dest: "{{ kubelet_config_file }}"
-      backup: yes
-    when: after_4_2_7 is defined
-  when: rule_4_2_7
-  tags:
-    - level1
-    - perms
-    - rule_4.2.7
-    - patch
-    - worker
+# - name: "SCORED | 4.2.7 | PATCH | L1 | WORKER | Ensure that the --make-iptables-util-chains argument is set to true"
+#   block:
+#   - name: "SCORED | 4.2.7 | PATCH | L1 | WORKER | Slurp file {{ kubelet_config_file }}"
+#     slurp:
+#       src: "{{ kubelet_config_file }}"
+#     register: slurped_4_2_7
+#   - name: "SCORED | 4.2.7 | PATCH | L1 | WORKER | Convert to dictionary"
+#     set_fact:
+#       before_4_2_7: "{{ slurped_4_2_7.content|b64decode|from_yaml }}"
+#   - name: "SCORED | 4.2.7 | PATCH | L1 | WORKER | Add new value"
+#     vars: 
+#       new_value_4_2_7:
+#         makeIPTablesUtilChains: true
+#     set_fact:
+#       after_4_2_7: "{{ before_4_2_7 | combine(new_value_4_2_7) }}"
+#     when: before_4_2_7.makeIPTablesUtilChains is not defined
+#   - name: "SCORED | 4.2.7 | PATCH | L1 | WORKER | Update existing value"
+#     set_fact:
+#       after_4_2_7: "{{ before_4_2_7 | combine(after_4_2_7, recursive=True) }}"
+#     vars: 
+#       after_4_2_7:
+#         makeIPTablesUtilChains: true
+#     when: before_4_2_7.makeIPTablesUtilChains is defined and before_4_2_7.makeIPTablesUtilChains != true
+#   - name: "SCORED | 4.2.7 | PATCH | L1 | WORKER | Ensure that the --make-iptables-util-chains argument is set to true"
+#     copy:
+#       content: '{{ after_4_2_7 | to_nice_yaml }}'
+#       dest: "{{ kubelet_config_file }}"
+#       backup: yes
+#     when: after_4_2_7 is defined
+#   when: rule_4_2_7
+#   tags:
+#     - level1
+#     - perms
+#     - rule_4.2.7
+#     - patch
+#     - worker
 
 
 #Speelman | Need to develop a way to pull the value out of the line in the file

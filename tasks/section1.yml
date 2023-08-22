@@ -1,9 +1,9 @@
 ---
-- name: "SCORED | 1.1.1 | PATCH | L1 | MASTER | Ensure that the API server pod specification file permissions are set to 644 or more restrictive"
+- name: "SCORED | 1.1.1 | PATCH | L1 | MASTER | Ensure that the API server pod specification file permissions are set to 600 or more restrictive"
   file:
     path: "{{ api_server_pod_specification_file }}"
     state: file
-    mode: 0644
+    mode: 0600
   when:
     - rule_1_1_1
   tags:
@@ -28,11 +28,11 @@
     - rule_1.1.2
     - master
 
-- name: "SCORED | 1.1.3 | PATCH | L1 | MASTER | Ensure that the controller manager pod specification file permissions are set to 644 or more restrictive"
+- name: "SCORED | 1.1.3 | PATCH | L1 | MASTER | Ensure that the controller manager pod specification file permissions are set to 600 or more restrictive"
   file:
     path: "{{ controller_manager_pod_specification_file }}"
     state: file
-    mode: 0644
+    mode: 0600
   when:
     - rule_1_1_3
   tags:
@@ -57,11 +57,11 @@
     - rule_1.1.4
     - master
 
-- name: "SCORED | 1.1.5 | PATCH | L1 | MASTER | Ensure that the scheduler pod specification file permissions are set to 644 or more restrictive"
+- name: "SCORED | 1.1.5 | PATCH | L1 | MASTER | Ensure that the scheduler pod specification file permissions are set to 600 or more restrictive"
   file:
     path: "{{ scheduler_pod_specification_file }}"
     state: file
-    mode: 0644
+    mode: 0600
   when:
     - rule_1_1_5
   tags:
@@ -86,11 +86,11 @@
     - rule_1.1.6
     - master
 
-- name: "SCORED | 1.1.7 | PATCH | L1 | MASTER | Ensure that the etcd pod specification file permissions are set to 644 or more restrictive"
+- name: "SCORED | 1.1.7 | PATCH | L1 | MASTER | Ensure that the etcd pod specification file permissions are set to 600 or more restrictive"
   file:
     path: "{{ etcd_pod_specification_file }}"
     state: file
-    mode: 0644
+    mode: 0600
   when:
     - rule_1_1_7
   tags:
@@ -115,7 +115,7 @@
     - rule_1.1.8
     - master
 
-- name: "SCORED | 1.1.9 | PATCH | L1 | MASTER | Ensure that the Container Network Interface file permissions are set to 644 or more restrictive"
+- name: "SCORED | 1.1.9 | PATCH | L1 | MASTER | Ensure that the Container Network Interface file permissions are set to 600 or more restrictive"
   block:
     - name: "1.1.9 | Find Container Network Interface files"
       find:
@@ -126,11 +126,11 @@
 #      debug:
 #        msg: "{{ item.path }}"
 #      loop: "{{ cni_files.files }}"
-    - name: "SCORED | 1.1.9 | PATCH | L1 | MASTER | Ensure that the Container Network Interface file permissions are set to 644 or more restrictive"
+    - name: "SCORED | 1.1.9 | PATCH | L1 | MASTER | Ensure that the Container Network Interface file permissions are set to 600 or more restrictive"
       file:
         path: "{{ item.path }}"
         state: file
-        mode: 0644
+        mode: 0600
       loop: "{{ cni_files.files }}"
   when:
     - rule_1_1_9
@@ -201,11 +201,11 @@
     - etcd
     - followup
 
-- name: "SCORED | 1.1.13 | PATCH | L1 | MASTER | Ensure that the admin.conf file permissions are set to 644 or more restrictive"
+- name: "SCORED | 1.1.13 | PATCH | L1 | MASTER | Ensure that the admin.conf file permissions are set to 600 or more restrictive"
   file:
     path: /etc/kubernetes/admin.conf
     state: file
-    mode: 0644
+    mode: 0600
   when:
     - rule_1_1_13
   tags:
@@ -230,11 +230,11 @@
     - rule_1.1.14
     - master
 
-- name: "SCORED | 1.1.15 | PATCH | L1 | MASTER | Ensure that the scheduler.conf file permissions are set to 644 or more restrictive"
+- name: "SCORED | 1.1.15 | PATCH | L1 | MASTER | Ensure that the scheduler.conf file permissions are set to 600 or more restrictive"
   file:
     path: /etc/kubernetes/scheduler.conf
     state: file
-    mode: 0644
+    mode: 0600
   when:
     - rule_1_1_15
   tags:
@@ -259,11 +259,11 @@
     - rule_1.1.16
     - master
 
-- name: "SCORED | 1.1.17 | PATCH | L1 | MASTER | Ensure that the controller-manager.conf file permissions are set to 644 or more restrictive"
+- name: "SCORED | 1.1.17 | PATCH | L1 | MASTER | Ensure that the controller-manager.conf file permissions are set to 600 or more restrictive"
   file:
     path: /etc/kubernetes/controller-manager.conf
     state: file
-    mode: 0644
+    mode: 0600
   when:
     - rule_1_1_17
   tags:
@@ -303,11 +303,11 @@
     - rule_1.1.19
     - master
 
-- name: "SCORED | 1.1.20 | PATCH | L1 | MASTER | Ensure that the Kubernetes PKI certificate file permissions are set to 644 or more restrictive"
+- name: "SCORED | 1.1.20 | PATCH | L1 | MASTER | Ensure that the Kubernetes PKI certificate file permissions are set to 600 or more restrictive"
   file:
     path: /etc/kubernetes/pki/
     state: directory
-    mode: 0644
+    mode: 0600
   when:
     - rule_1_1_20
   tags:
@@ -316,6 +316,21 @@
     - patch
     - rule_1.1.20
     - master
+
+- name: "SCORED | 1.1.21 | PATCH | L1 | MASTER | Ensure that the Kubernetes PKI certificate file permissions are set to 600 or more restrictive"
+  file:
+    path: /etc/kubernetes/pki/*.key
+    state: file
+    mode: 0600
+  when:
+    - rule_1_1_21
+  tags:
+    - level1
+    - perms
+    - patch
+    - rule_1.1.21
+    - master
+
 
 
 ########################################################
@@ -348,12 +363,27 @@
     - rule_1.2.1
     - master
 
-- name: "SCORED | 1.2.2 | PATCH | L1 | MASTER | Ensure that the --basic-auth-file argument is not set"
+# - name: "SCORED | 1.2.2 | PATCH | L1 | MASTER | Ensure that the --basic-auth-file argument is not set"
+#   lineinfile:
+#     path: "{{ api_server_pod_specification_file }}"
+#     state: absent
+#     backup: yes
+#     regexp: '^\s+- --basic-auth-file=.*'
+#   when:
+#     - rule_1_2_2
+#   tags:
+#     - level1
+#     - perms
+#     - patch
+#     - rule_1.2.2
+#     - master
+
+- name: "SCORED | 1.2.2 | PATCH | L1 | MASTER | Ensure that the --token-auth-file parameter is not set"
   lineinfile:
     path: "{{ api_server_pod_specification_file }}"
     state: absent
     backup: yes
-    regexp: '^\s+- --basic-auth-file=.*'
+    regexp: '^\s+- --token-auth-file=.*'
   when:
     - rule_1_2_2
   tags:
@@ -363,47 +393,33 @@
     - rule_1.2.2
     - master
 
-- name: "SCORED | 1.2.3 | PATCH | L1 | MASTER | Ensure that the --token-auth-file parameter is not set"
-  lineinfile:
-    path: "{{ api_server_pod_specification_file }}"
-    state: absent
-    backup: yes
-    regexp: '^\s+- --token-auth-file=.*'
-  when:
-    - rule_1_2_3
-  tags:
-    - level1
-    - perms
-    - patch
-    - rule_1.2.3
-    - master
+# - name: "SCORED | 1.2.3 | PATCH | L1 | MASTER | Ensure that the --kubelet-https argument is set to true"
+#   block:
+#   - name: "SCORED | 1.2.3 | PATCH | L1 | MASTER | If argument '--kubelet-https' does not exist, add it"
+#     lineinfile:
+#       path: "{{ api_server_pod_specification_file }}"
+#       state: present
+#       backup: yes
+#       regexp: '^(\s+- --kubelet-https=.*)$'
+#       line: "    - --kubelet-https=true"
+#       insertafter: '^\s+- kube-apiserver$'
+#   - name: "SCORED | 1.2.3 | PATCH | L1 | MASTER | Ensure that the --kubelet-https argument is set to true"
+#     lineinfile:
+#       path: "{{ api_server_pod_specification_file }}"
+#       state: present
+#       backup: true
+#       backrefs: true
+#       regexp: '^(\s+- --kubelet-https=)(?!true).*$'
+#       line: '\1true'
+#   when:
+#     - rule_1_2_3
+#   tags:
+#     - level1
+#     - perms
+#     - patch
+#     - rule_1.2.3
+#     - master
 
-- name: "SCORED | 1.2.4 | PATCH | L1 | MASTER | Ensure that the --kubelet-https argument is set to true"
-  block:
-  - name: "SCORED | 1.2.4 | PATCH | L1 | MASTER | If argument '--kubelet-https' does not exist, add it"
-    lineinfile:
-      path: "{{ api_server_pod_specification_file }}"
-      state: present
-      backup: yes
-      regexp: '^(\s+- --kubelet-https=.*)$'
-      line: "    - --kubelet-https=true"
-      insertafter: '^\s+- kube-apiserver$'
-  - name: "SCORED | 1.2.4 | PATCH | L1 | MASTER | Ensure that the --kubelet-https argument is set to true"
-    lineinfile:
-      path: "{{ api_server_pod_specification_file }}"
-      state: present
-      backup: true
-      backrefs: true
-      regexp: '^(\s+- --kubelet-https=)(?!true).*$'
-      line: '\1true'
-  when:
-    - rule_1_2_4
-  tags:
-    - level1
-    - perms
-    - patch
-    - rule_1.2.4
-    - master
 
 - name: "SCORED | 1.2.5 | PATCH | L1 | MASTER | Ensure that the --kubelet-client-certificate and --kubelet-client-key arguments are set as appropriate"
   block:
@@ -895,43 +911,43 @@
     - master
     - followup
 
-#Speelman | Works, but having issue with combining group one (\1) followed by a literal number
-- name: "SCORED | 1.2.20 | PATCH | L1 | MASTER | Ensure that the --secure-port argument is not set to {{ secure_port }}"
-  block:
-  - name: "SCORED | 1.2.20 | PATCH | L1 | MASTER | If argument '--secure-port' does not exist, add it"
-    lineinfile:
-      path: "{{ api_server_pod_specification_file }}"
-      state: present
-      regexp: '^(\s+- --secure-port=).*$'
-      line: '    - --secure-port={{ secure_port }}'
-      insertafter: '^\s+- kube-apiserver$'
-      backup: yes
-  - name: "SCORED | 1.2.20 | PATCH | L1 | MASTER | Ensure that the --secure-port argument is not set to {{ secure_port }}"
-    lineinfile:
-      path: "{{ api_server_pod_specification_file }}"
-      state: present
-      regexp: '^(\s+- --secure-port=)(?!{{ secure_port }}).*$'
-      line: '    - --secure-port={{ secure_port }}'
-      #Issues with these variations:
-      #line: '\1{{ secure_port }}'
-      #line: '\{1}8443'
-      #line: '\1`8443'
-      #line: '\1\84430'
-      #line: '\1{8443}'
-      #line: '${1}1234'
-      #line: '\1(?P=car)'
-      insertafter: '^\s+- kube-apiserver$'
-      backrefs: true
-      backup: yes
-  when:
-    - rule_1_2_20
-  tags:
-    - level1
-    - perms
-    - patch
-    - rule_1.2.20
-    - master
-    - followup
+# #Speelman | Works, but having issue with combining group one (\1) followed by a literal number
+# - name: "SCORED | 1.2.20 | PATCH | L1 | MASTER | Ensure that the --secure-port argument is not set to {{ secure_port }}"
+#   block:
+#   - name: "SCORED | 1.2.20 | PATCH | L1 | MASTER | If argument '--secure-port' does not exist, add it"
+#     lineinfile:
+#       path: "{{ api_server_pod_specification_file }}"
+#       state: present
+#       regexp: '^(\s+- --secure-port=).*$'
+#       line: '    - --secure-port={{ secure_port }}'
+#       insertafter: '^\s+- kube-apiserver$'
+#       backup: yes
+#   - name: "SCORED | 1.2.20 | PATCH | L1 | MASTER | Ensure that the --secure-port argument is not set to {{ secure_port }}"
+#     lineinfile:
+#       path: "{{ api_server_pod_specification_file }}"
+#       state: present
+#       regexp: '^(\s+- --secure-port=)(?!{{ secure_port }}).*$'
+#       line: '    - --secure-port={{ secure_port }}'
+#       #Issues with these variations:
+#       #line: '\1{{ secure_port }}'
+#       #line: '\{1}8443'
+#       #line: '\1`8443'
+#       #line: '\1\84430'
+#       #line: '\1{8443}'
+#       #line: '${1}1234'
+#       #line: '\1(?P=car)'
+#       insertafter: '^\s+- kube-apiserver$'
+#       backrefs: true
+#       backup: yes
+#   when:
+#     - rule_1_2_20
+#   tags:
+#     - level1
+#     - perms
+#     - patch
+#     - rule_1.2.20
+#     - master
+#     - followup
 
 
 - name: "SCORED | 1.2.21 | PATCH | L1 | MASTER | Ensure that the --profiling argument is set to false"
