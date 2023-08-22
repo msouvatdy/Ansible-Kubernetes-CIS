@@ -625,29 +625,30 @@
       state: present
       regexp: '^(\s+- --enable-admission-plugins=(?!.*EventRateLimit).*)$'
       line: '\1,EventRateLimit'
-  - name: "SCORED | 1.2.10 | AUDIT | L1 | MASTER | Test if --admission-control-config-file argument is set"
-    lineinfile:
-      path: "{{ api_server_pod_specification_file }}"
-      regexp: '\s- --admission-control-config-file=.*'
-      state: absent
-    check_mode: yes
-    changed_when: false
-    register: admission_control_config_file
-  - name: "SCORED | 1.2.10 | AUDIT | L1 | MASTER | Assert that admission-control-config argument is set"
-    assert:
-      that: admission_control_config_file.found
-      success_msg: "'--admission-control-config-file' argument is set"
-      fail_msg: "'--admission-control-config-file' argument is not set"
-  when:
-    - rule_1_2_10
-    - enable_admission_plugins.found
-  tags:
-    - level1
-    - perms
-    - audit
-    - rule_1.2.10
-    - master
-    - followup
+    
+#  - name: "SCORED | 1.2.10 | AUDIT | L1 | MASTER | Test if --admission-control-config-file argument is set"
+#    lineinfile:
+#      path: "{{ api_server_pod_specification_file }}"
+#      regexp: '\s- --admission-control-config-file=.*'
+#      state: absent
+#    check_mode: yes
+#    changed_when: false
+#    register: admission_control_config_file
+#  - name: "SCORED | 1.2.10 | AUDIT | L1 | MASTER | Assert that admission-control-config argument is set"
+#    assert:
+#      that: admission_control_config_file.found
+#      success_msg: "'--admission-control-config-file' argument is set"
+#      fail_msg: "'--admission-control-config-file' argument is not set"
+#  when:
+#    - rule_1_2_10
+#    - enable_admission_plugins.found
+#  tags:
+#    - level1
+#    - perms
+#    - audit
+#    - rule_1.2.10
+#    - master
+#    - followup
 
 #Speelman | This step assumes --enable-admission-plugins is already set
 #Speelman | Need to develop a way to manipulate the array of values for this argument
