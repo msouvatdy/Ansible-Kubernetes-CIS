@@ -194,7 +194,7 @@ rule_5_1_3: true
 api_server_pod_specification_file: "/etc/kubernetes/manifests/kube-apiserver.yaml"
 kubelet_client_certificate_path: "/etc/kubernetes/pki/apiserver-kubelet-client.crt"
 kubelet_client_key_path: "/etc/kubernetes/pki/apiserver-kubelet-client.key"
-kubelet_certificate_authority_path: "/var/lib/kubelet/pki/kubelet-client-current.pem"
+kubelet_certificate_authority_path: "/etc/kubernetes/pki/ca.crt"
 insecure_port: 0
 secure_port: 6443
 audit_log_path: "/logs/kube-apiserver.log"
