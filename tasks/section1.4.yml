@@ -1,0 +1,62 @@
+########################################################
+#region Scheduler pod specification file
+########################################################
+- name: "SCORED | 1.4.1 | PATCH | L1 | MASTER | Ensure that the --profiling argument is set to {{ scheduler_profiling }}"
+  block:
+  - name: "SCORED | 1.4.1 | PATCH | L1 | MASTER | If argument '--profiling' argument does not exist, add it"
+    lineinfile:
+      path: "{{ scheduler_pod_specification_file }}"
+      state: present
+      regexp: '^(\s+- --profiling=).*$'
+      line: '    - --profiling={{ scheduler_profiling }}'
+      insertafter: '^\s+- kube-scheduler$'
+      backup: yes
+  - name: "SCORED | 1.4.1 | PATCH | L1 | MASTER | Ensure that the --profiling argument is set to {{ scheduler_profiling }}"
+    lineinfile:
+      path: "{{ scheduler_pod_specification_file }}"
+      state: present
+      regexp: '^(\s+- --profiling=)(?!{{ scheduler_profiling }}).*$'
+      line: '    - --profiling={{ scheduler_profiling }}'
+      insertafter: '^\s+- kube-scheduler$'
+      backrefs: true
+      backup: yes
+  when:
+    - rule_1_4_1
+  tags:
+    - level1
+    - perms
+    - patch
+    - rule_1.4.1
+    - master
+
+
+- name: "SCORED | 1.4.2 | PATCH | L1 | MASTER | Ensure that the --bind-address argument is set to {{ scheduler_bind_address }}"
+  block:
+  - name: "SCORED | 1.4.2 | PATCH | L1 | MASTER | If argument '--bind-address' argument does not exist, add it"
+    lineinfile:
+      path: "{{ scheduler_pod_specification_file }}"
+      state: present
+      regexp: '^(\s+- --bind-address=).*$'
+      line: '    - --bind-address={{ scheduler_bind_address }}'
+      insertafter: '^\s+- kube-scheduler$'
+      backup: yes
+  - name: "SCORED | 1.4.2 | PATCH | L1 | MASTER | Ensure that the --bind-address argument is set to {{ scheduler_bind_address }}"
+    lineinfile:
+      path: "{{ scheduler_pod_specification_file }}"
+      state: present
+      regexp: '^(\s+- --bind-address=)(?!{{ scheduler_bind_address }}).*$'
+      line: '    - --bind-address={{ scheduler_bind_address }}'
+      insertafter: '^\s+- kube-scheduler$'
+      backrefs: true
+      backup: yes
+  when:
+    - rule_1_4_2
+  tags:
+    - level1
+    - perms
+    - patch
+    - rule_1.4.2
+    - master
+########################################################
+#endregion Scheduler pod specification file
+########################################################

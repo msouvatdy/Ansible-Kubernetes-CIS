@@ -1,0 +1,211 @@
+########################################################
+#region Controller Manager pod specification file
+########################################################
+#Speelman | Works, but having issue with joining group one (\1) followed by a literal number
+- name: "SCORED | 1.3.1 | PATCH | L1 | MASTER | Ensure that the --terminated-pod-gc-threshold argument is set as appropriate"
+  block:
+  - name: "SCORED | 1.3.1 | PATCH | L1 | MASTER | If argument '--terminated-pod-gc-threshold' does not exist, add it"
+    lineinfile:
+      path: "{{ controller_manager_pod_specification_file }}"
+      state: present
+      regexp: '^(\s+- --terminated-pod-gc-threshold=).*$'
+      line: '    - --terminated-pod-gc-threshold={{ terminated_pod_gc_threshold }}'
+      insertafter: '^\s+- kube-controller-manager$'
+      backup: yes
+  - name: "SCORED | 1.3.1 | PATCH | L1 | MASTER | Ensure that the --terminated-pod-gc-threshold argument is set as appropriate"
+    lineinfile:
+      path: "{{ controller_manager_pod_specification_file }}"
+      state: present
+      regexp: '^(\s+- --terminated-pod-gc-threshold=)(?!{{ terminated_pod_gc_threshold }}).*$'
+      line: '    - --terminated-pod-gc-threshold={{ terminated_pod_gc_threshold }}'
+      insertafter: '^\s+- kube-controller-manager$'
+      backrefs: true
+      backup: yes
+  when:
+    - rule_1_3_1
+  tags:
+    - level1
+    - perms
+    - patch
+    - rule_1.3.1
+    - master
+    - followup
+
+
+- name: "SCORED | 1.3.2 | PATCH | L1 | MASTER | Ensure that the --profiling argument is set to false"
+  block:
+  - name: "SCORED | 1.3.2 | PATCH | L1 | MASTER | If argument '--profiling' does not exist, add it"
+    lineinfile:
+      path: "{{ controller_manager_pod_specification_file }}"
+      state: present
+      regexp: '^(\s+- --profiling=).*$'
+      line: '    - --profiling={{ controller_manager_profiling }}'
+      insertafter: '^\s+- kube-controller-manager$'
+      backup: yes
+  - name: "SCORED | 1.3.2 | PATCH | L1 | MASTER | Ensure that the --profiling argument is set to false"
+    lineinfile:
+      path: "{{ controller_manager_pod_specification_file }}"
+      state: present
+      regexp: '^(\s+- --profiling=)(?!{{ controller_manager_profiling }}).*$'
+      line: '    - --profiling={{ controller_manager_profiling }}'
+      insertafter: '^\s+- kube-controller-manager$'
+      backrefs: true
+      backup: yes
+  when:
+    - rule_1_3_2
+  tags:
+    - level1
+    - perms
+    - patch
+    - rule_1.3.2
+    - master
+
+
+- name: "SCORED | 1.3.3 | PATCH | L1 | MASTER | Ensure that the --use-service-account-credentials argument is set to true"
+  block:
+  - name: "SCORED | 1.3.3 | PATCH | L1 | MASTER | If argument '--use-service-account-credentials' does not exist, add it"
+    lineinfile:
+      path: "{{ controller_manager_pod_specification_file }}"
+      state: present
+      regexp: '^(\s+- --use-service-account-credentials=).*$'
+      line: '    - --use-service-account-credentials={{ use_service_account_credentials }}'
+      insertafter: '^\s+- kube-controller-manager$'
+      backup: yes
+  - name: "SCORED | 1.3.3 | PATCH | L1 | MASTER | Ensure that the --use-service-account-credentials argument is set to true"
+    lineinfile:
+      path: "{{ controller_manager_pod_specification_file }}"
+      state: present
+      regexp: '^(\s+- --use-service-account-credentials=)(?!{{ use_service_account_credentials }}).*$'
+      line: '    - --use-service-account-credentials={{ use_service_account_credentials }}'
+      insertafter: '^\s+- kube-controller-manager$'
+      backrefs: true
+      backup: yes
+  when:
+    - rule_1_3_3
+  tags:
+    - level1
+    - perms
+    - patch
+    - rule_1.3.3
+    - master
+
+
+- name: "SCORED | 1.3.4 | PATCH | L1 | MASTER | Ensure that the --service-account-private-key-file  argument is set as appropriate"
+  block:
+  - name: "SCORED | 1.3.4 | PATCH | L1 | MASTER | If argument '--service-account-private-key-file' does not exist, add it"
+    lineinfile:
+      path: "{{ controller_manager_pod_specification_file }}"
+      state: present
+      regexp: '^(\s+- --service-account-private-key-file=).*$'
+      line: '    - --service-account-private-key-file={{ service_account_private_key_file }}'
+      insertafter: '^\s+- kube-controller-manager$'
+      backup: yes
+  - name: "SCORED | 1.3.4 | PATCH | L1 | MASTER | Ensure that the --service-account-private-key-file  argument is set as appropriate"
+    lineinfile:
+      path: "{{ controller_manager_pod_specification_file }}"
+      state: present
+      regexp: '^(\s+- --service-account-private-key-file=)(?!{{ service_account_private_key_file }}).*$'
+      line: '    - --service-account-private-key-file={{ service_account_private_key_file }}'
+      insertafter: '^\s+- kube-controller-manager$'
+      backrefs: true
+      backup: yes
+  when:
+    - rule_1_3_4
+  tags:
+    - level1
+    - perms
+    - patch
+    - rule_1.3.4
+    - master
+
+
+- name: "SCORED | 1.3.5 | PATCH | L1 | MASTER | Ensure that the --root-ca-file argument is set as appropriate"
+  block:
+  - name: "SCORED | 1.3.5 | PATCH | L1 | MASTER | If argument '--root-ca-file' does not exist, add it"
+    lineinfile:
+      path: "{{ controller_manager_pod_specification_file }}"
+      state: present
+      regexp: '^(\s+- --root-ca-file=).*$'
+      line: '    - --root-ca-file={{ root_ca_file }}'
+      insertafter: '^\s+- kube-controller-manager$'
+      backup: yes
+  - name: "SCORED | 1.3.5 | PATCH | L1 | MASTER | Ensure that the --root-ca-file argument is set as appropriate"
+    lineinfile:
+      path: "{{ controller_manager_pod_specification_file }}"
+      state: present
+      regexp: '^(\s+- --root-ca-file=)(?!{{ root_ca_file }}).*$'
+      line: '    - --root-ca-file={{ root_ca_file }}'
+      insertafter: '^\s+- kube-controller-manager$'
+      backrefs: true
+      backup: yes
+  when:
+    - rule_1_3_5
+  tags:
+    - level1
+    - perms
+    - patch
+    - rule_1.3.5
+    - master
+
+#This one accepts an array of key-value pairs...need to write something custom to account for existing values or just set the values
+# in the feature_gates variable
+- name: "SCORED | 1.3.6 | PATCH | L2 | MASTER | Ensure that the RotateKubeletServerCertificate argument is set to true"
+  block:
+  - name: "SCORED | 1.3.6 | PATCH | L2 | MASTER | If argument '--feature-gates' does not exist, add it"
+    lineinfile:
+      path: "{{ controller_manager_pod_specification_file }}"
+      state: present
+      regexp: '^(\s+- --feature-gates=).*$'
+      line: '    - --feature-gates={{ feature_gates }}'
+      insertafter: '^\s+- kube-controller-manager$'
+      backup: yes
+  - name: "SCORED | 1.3.6 | PATCH | L2 | MASTER | Ensure that the RotateKubeletServerCertificate argument is set to true"
+    lineinfile:
+      path: "{{ controller_manager_pod_specification_file }}"
+      state: present
+      regexp: '^(\s+- --feature-gates=)(?!{{ feature_gates }}).*$'
+      line: '    - --feature-gates={{ feature_gates }}'
+      insertafter: '^\s+- kube-controller-manager$'
+      backrefs: true
+      backup: yes
+  when:
+    - rule_1_3_6
+  tags:
+    - level2
+    - perms
+    - patch
+    - rule_1.3.6
+    - master
+    - followup
+
+
+- name: "SCORED | 1.3.7 | PATCH | L1 | MASTER | Ensure that the --bind-address argument is set to {{ controller_manager_bind_address }}"
+  block:
+  - name: "SCORED | 1.3.7 | PATCH | L1 | MASTER | If argument '--bind-address' does not exist, add it"
+    lineinfile:
+      path: "{{ controller_manager_pod_specification_file }}"
+      state: present
+      regexp: '^(\s+- --bind-address=).*$'
+      line: '    - --bind-address={{ controller_manager_bind_address }}'
+      insertafter: '^\s+- kube-controller-manager$'
+      backup: yes
+  - name: "SCORED | 1.3.7 | PATCH | L1 | MASTER | Ensure that the --bind-address argument is set to {{ controller_manager_bind_address }}"
+    lineinfile:
+      path: "{{ controller_manager_pod_specification_file }}"
+      state: present
+      regexp: '^(\s+- --bind-address=)(?!{{ controller_manager_bind_address }}).*$'
+      line: '    - --bind-address={{ controller_manager_bind_address }}'
+      insertafter: '^\s+- kube-controller-manager$'
+      backrefs: true
+      backup: yes
+  when:
+    - rule_1_3_7
+  tags:
+    - level1
+    - perms
+    - patch
+    - rule_1.3.7
+    - master
+########################################################
+#endregion Controller Manager pod specification file
+########################################################

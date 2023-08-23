@@ -31,10 +31,28 @@
       - always
 
 - name: Execute the Control Plane Components tasks
-  import_tasks: section1.yml
+  import_tasks: section1.1.yml
   when: section1_patch | bool
   tags:
-      - section1
+      - section1-1
+
+- name: API Server pod specification file
+  import_tasks: section1.2.yml
+  when: section1_patch | bool
+  tags:
+      - section1-2
+
+- name: Controller Manager pod specification file
+  import_tasks: section1.3.yml
+  when: section1_patch | bool
+  tags:
+      - section1-3
+
+- name: Scheduler pod specification file
+  import_tasks: section1.4.yml
+  when: section1_patch | bool
+  tags:
+      - section1-4
 
 - name: Execute the etcd related tasks
   import_tasks: section2.yml
